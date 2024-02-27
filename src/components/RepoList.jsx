@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
+import RepoCard from "./RepoCard"; // Importa el componente RepoCard
 
 const RepoList = ({ username }) => {
   const [repos, setRepos] = useState([]);
@@ -27,9 +28,8 @@ const RepoList = ({ username }) => {
       <h2>Top 5 repositorios con más participación de {username}</h2>
       <ul>
         {repos.map((repo) => (
-          <li key={repo.id}>
-            {repo.name} - Tamaño: {repo.size}
-          </li>
+          // Pasa el nombre y el tamaño del repositorio como propiedades
+          <RepoCard key={repo.id} repoName={repo.name} repoSize={repo.size} />
         ))}
       </ul>
     </div>

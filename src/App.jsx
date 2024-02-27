@@ -8,8 +8,9 @@ import {
   Toolbar,
 } from "@mui/material";
 import RepoList from "./components/RepoList";
+import "./App.css"; // Archivo de estilos personalizado
 
-function App() {
+const App = () => {
   const [username, setUsername] = useState("");
   const [showRepoList, setShowRepoList] = useState(false);
 
@@ -24,9 +25,9 @@ function App() {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="static" className="app-bar">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h3" component="div" className="title">
             Mi Explorador de Repositorios
           </Typography>
         </Toolbar>
@@ -41,7 +42,7 @@ function App() {
             fullWidth
             sx={{ marginBottom: "10px" }}
           />
-          <Button type="submit" variant="contained" fullWidth>
+          <Button type="submit" variant="contained" fullWidth sx={{ padding: "10%" }}>
             Buscar Repositorios
           </Button>
         </form>
@@ -49,6 +50,6 @@ function App() {
       </Container>
     </div>
   );
-}
+};
 
 export default App;
