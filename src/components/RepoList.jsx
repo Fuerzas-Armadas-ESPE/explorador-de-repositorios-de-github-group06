@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
+import RepoCard from "./RepoCard"; // Importa el componente RepoCard
+import {Pagination} from "@mui/material";
 
 const RepoList = ({ username }) => {
   const [repos, setRepos] = useState([]);
+  const [page, setPage] = useState(1);
+  const reposPerPage = 7;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,8 +16,7 @@ const RepoList = ({ username }) => {
           `https://api.github.com/users/${username}/repos`
         );
         const sortedRepos = response.data.sort((a, b) => b.size - a.size);
-        const topRepos = sortedRepos.slice(0, 5);
-        setRepos(topRepos);
+        setRepos(sortedRepos);
       } catch (error) {
         console.error("Error fetching repos:", error);
       }
@@ -22,16 +25,30 @@ const RepoList = ({ username }) => {
     fetchData();
   }, [username]);
 
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const paginatedRepos = repos.slice((page - 1) * reposPerPage, page * reposPerPage);
+
   return (
     <div>
-      <h2>Top 5 repositorios con más participación de {username}</h2>
+      <h2>Repositorios de {username}</h2>
       <ul>
-        {repos.map((repo) => (
-          <li key={repo.id}>
-            {repo.name} - Tamaño: {repo.size}
-          </li>
+        {paginatedRepos.map((repo) => (
+          <RepoCard key={repo.id} repoName={repo.name} repoSize={repo.size} />
         ))}
       </ul>
+      <div className="pag-container">
+      <Pagination
+        count={Math.ceil(repos.length / reposPerPage)}
+        page={page}
+        onChange={handlePageChange}
+        variant="outlined"
+        shape="rounded"
+        size="large"
+      />
+      </div>
     </div>
   );
 };
