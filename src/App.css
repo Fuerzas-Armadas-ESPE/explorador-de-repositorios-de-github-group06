@@ -50,7 +50,7 @@
 
 .app-bar {
   background-color: transparent !important; /* Fondo transparente */
-  boxShadow: none !important; /* Sin sombra */
+
 }
 
 @keyframes fadeInDown {
